@@ -4,8 +4,8 @@ const GlobalStyle = createGlobalStyle`
   
   
   :root {
-  --theme: #191C23;
-  --text: #efefef;
+  --theme: #252525;
+  --text: #FAFAFA;
   }
   
   html {

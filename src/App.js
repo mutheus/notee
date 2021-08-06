@@ -1,11 +1,20 @@
 import { Fragment } from 'react';
+import {
+  MemoryRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import styled from 'styled-components';
 import { IoMoonOutline } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
+import { IoIosArrowBack } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
+import { IoAddOutline } from "react-icons/io5";
 
 export default function App() {
-  const Wrapper = styled.div`
+  const Header = styled.header`
     display: flex;
     justify-content: space-between;
     place-items: center;
@@ -14,8 +23,9 @@ export default function App() {
   `;
   
   const Logo = styled.h1`
+    font-size: 2rem;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
   `;
   
   const IconsWrapper = styled.div`
@@ -24,12 +34,14 @@ export default function App() {
     gap: 20px;
   `;
   
-  const Search = styled.div`
-    padding: 5px;
-    background-color: var(--text);
-    color: var(--theme);
-    border-radius: 7px;
+  const IconContainer = styled.div`
+    width: 50px;
+    aspect-ratio: 1/1;
+    background-color: #3B3B3B;
+    color: var(--text);
+    border-radius: 12px;
     display: flex;
+    place-content: center;
     place-items: center;
   `;
   
@@ -37,17 +49,46 @@ export default function App() {
     <Fragment>
       <GlobalStyle />
       
-      <Wrapper>
-        <Logo>Notee</Logo>
-        
-        <IconsWrapper>
-          <IoMoonOutline size={24} />
-          
-          <Search>
-            <AiOutlineSearch size={24} />
-          </Search>
-        </IconsWrapper>
-      </Wrapper>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <div>
+              <Header>
+                <Logo>Notee</Logo>
+                
+                <IconsWrapper>
+                  <IoMoonOutline size={24} />
+                  
+                  <IconContainer>
+                    <AiOutlineSearch size={24} />
+                  </IconContainer>
+                </IconsWrapper>
+              </Header>
+              
+              <Link to="/create">
+                <IconContainer style={{ borderRadius: '50%', position: 'fixed', bottom: '2em', right: '1em' }}>
+                  <IoAddOutline size={24} />
+                </IconContainer>
+              </Link>
+            </div>
+          </Route>
+          <Route path="/create">
+            <Header>
+              <Link to="/">
+                <IconContainer>
+                  <IoIosArrowBack size={24} />
+                </IconContainer>
+              </Link>
+              
+              <Link>
+                <IconContainer>
+                  <BiEdit size={24} />
+                </IconContainer>
+              </Link>
+            </Header>
+          </Route>
+        </Switch>
+      </Router>
     </Fragment>
   );
 }
