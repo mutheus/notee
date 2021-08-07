@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import {
   MemoryRouter as Router,
   Switch,
@@ -7,22 +7,24 @@ import {
 } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import styled from 'styled-components';
-import { IoMoonOutline } from "react-icons/io5";
-import { AiOutlineSearch } from "react-icons/ai";
-import { IoIosArrowBack } from "react-icons/io";
-import { BiEdit } from "react-icons/bi";
-import { IoAddOutline } from "react-icons/io5";
+import { FiMoon } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
+import { FiChevronLeft } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { FiCheckSquare } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 export default function App() {
+  const [isEditing, setIsEditing] = useState(true);
+  
   const Header = styled.header`
     display: flex;
     justify-content: space-between;
     place-items: center;
     padding: 2em 1em;
-    border-bottom: 1px solid #343434;
   `;
   
-  const Logo = styled.h1`
+  const Title = styled.h1`
     font-size: 2rem;
     margin: 0;
     font-weight: 600;
@@ -45,6 +47,44 @@ export default function App() {
     place-items: center;
   `;
   
+  const NoteWrapper = styled.div`
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    padding: 2em 1em;
+  `;
+  
+  const Paragraph = styled.p`
+    margin: 0;
+  `;
+  
+  const Input = styled.input`
+    display: flex;
+    font-size: 2rem;
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    font-weight: 600;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 0;
+    margin: 0;
+    color: var(--text);
+    border: none;
+  `;
+  
+  const Textarea = styled.textarea`
+    display: flex;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 0;
+    margin: 0;
+    color: var(--text);
+    border: none;
+  `;
+  
   return (
     <Fragment>
       <GlobalStyle />
@@ -54,38 +94,62 @@ export default function App() {
           <Route exact path="/">
             <div>
               <Header>
-                <Logo>Notee</Logo>
+                <Title>Notee</Title>
                 
                 <IconsWrapper>
-                  <IoMoonOutline size={24} />
+                  <FiMoon size={24} />
                   
                   <IconContainer>
-                    <AiOutlineSearch size={24} />
+                    <FiSearch size={24} />
                   </IconContainer>
                 </IconsWrapper>
               </Header>
               
-              <Link to="/create">
+              <Link to="/create" onClick={() => setIsEditing(true)}>
                 <IconContainer style={{ borderRadius: '50%', position: 'fixed', bottom: '2em', right: '1em' }}>
-                  <IoAddOutline size={24} />
+                  <FiPlus size={24} />
                 </IconContainer>
               </Link>
             </div>
           </Route>
           <Route path="/create">
-            <Header>
-              <Link to="/">
-                <IconContainer>
-                  <IoIosArrowBack size={24} />
-                </IconContainer>
-              </Link>
+            <div>
+              <Header>
+                <Link to="/">
+                  <IconContainer>
+                    <FiChevronLeft size={24} />
+                  </IconContainer>
+                </Link>
+                
+                { isEditing ? (
+                  <Link onClick={() => setIsEditing(!isEditing)}>
+                    <IconContainer>
+                      <FiCheckSquare size={20} />
+                    </IconContainer>
+                  </Link>
+                ) : (
+                  <Link onClick={() => setIsEditing(!isEditing)}>
+                    <IconContainer>
+                      <FiEdit size={20} />
+                    </IconContainer>
+                  </Link>
+                )}
+              </Header>
               
-              <Link>
-                <IconContainer>
-                  <BiEdit size={24} />
-                </IconContainer>
-              </Link>
-            </Header>
+              <NoteWrapper>
+                { isEditing ? (
+                  <Input placeholder="Type a title..." />
+                ) : (
+                  <Title>Type a title...</Title>
+                )}
+                
+                { isEditing ? (
+                  <Textarea rows="5" placeholder="Type something..."></Textarea>
+                ) : (
+                  <Paragraph>Type something...</Paragraph>
+                )}
+              </NoteWrapper>
+            </div>
           </Route>
         </Switch>
       </Router>
