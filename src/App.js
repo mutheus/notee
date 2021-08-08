@@ -5,14 +5,13 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import GlobalStyle from './globalStyles';
-import styled from 'styled-components';
-import { FiMoon } from "react-icons/fi";
-import { FiSearch } from "react-icons/fi";
+import { Home } from './components/Home';
 import { FiChevronLeft } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { FiCheckSquare } from "react-icons/fi";
-import { FiPlus } from "react-icons/fi";
+
+import GlobalStyle from './globalStyles';
+import styled from 'styled-components';
 
 export default function App() {
   const [isEditing, setIsEditing] = useState(true);
@@ -92,25 +91,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <div>
-              <Header>
-                <Title>Notee</Title>
-                
-                <IconsWrapper>
-                  <FiMoon size={24} />
-                  
-                  <IconContainer>
-                    <FiSearch size={24} />
-                  </IconContainer>
-                </IconsWrapper>
-              </Header>
-              
-              <Link to="/create" onClick={() => setIsEditing(true)}>
-                <IconContainer style={{ borderRadius: '50%', position: 'fixed', bottom: '2em', right: '1em' }}>
-                  <FiPlus size={24} />
-                </IconContainer>
-              </Link>
-            </div>
+            <Home setIsEditing={setIsEditing} />
           </Route>
           <Route path="/create">
             <div>
@@ -144,9 +125,9 @@ export default function App() {
                 )}
                 
                 { isEditing ? (
-                  <Textarea rows="5" placeholder="Type something..."></Textarea>
+                  <Textarea rows="5" placeholder="Type a description..."></Textarea>
                 ) : (
-                  <Paragraph>Type something...</Paragraph>
+                  <Paragraph>Type a description...</Paragraph>
                 )}
               </NoteWrapper>
             </div>
