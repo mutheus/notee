@@ -5,7 +5,7 @@ import { FiPlus } from "react-icons/fi";
 
 import styled from 'styled-components';
 
-export function Home({ setIsEditing }) {
+export function Home({ setIsEditing, notes }) {
   const Header = styled.header`
     display: flex;
     justify-content: space-between;
@@ -36,10 +36,34 @@ export function Home({ setIsEditing }) {
     place-items: center;
   `;
   
+  const NoteContainer = styled.section`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    padding: 2em 1em;
+  `;
+  
+  const NoteItem = styled.div`
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
+    padding: 1em;
+    background-color: #FFAA91;
+    color: var(--theme);
+  `;
+  
+  const Subtitle = styled.h4`
+    margin: 0;
+  `;
+  
+  function handleNoteItemClick(id) {
+    setIsEditing(false);
+  }
+  
   return (
     <>
       <Header>
-        <Title>Notee</Title>
+        <Title>Notes</Title>
         
         <IconsWrapper>
           <FiMoon size={24} />
@@ -49,6 +73,14 @@ export function Home({ setIsEditing }) {
           </IconContainer>
         </IconsWrapper>
       </Header>
+      
+      <NoteContainer>
+        { notes ? (
+          notes.map((item, index) => <Link to={`/${index}`}><NoteItem key={index} onClick={() => handleNoteItemClick(index)}><Subtitle>{item.title}</Subtitle></NoteItem></Link>)
+        ) : (
+          <span>Nothing to see here yet.</span>
+        )}
+      </NoteContainer>
       
       <Link to="/create" onClick={() => setIsEditing(true)}>
         <IconContainer style={{ borderRadius: '50%', position: 'fixed', bottom: '2em', right: '1em' }}>
