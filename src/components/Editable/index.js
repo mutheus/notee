@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export function Editable({
   text,
+  type,
   placeholder,
   children,
   isEditing
@@ -13,6 +14,11 @@ export function Editable({
     font-weight: 600;
   `;
   
+  const Paragraph = styled.p`
+    font-size: 1em;
+    margin: 0;
+  `;
+  
   return (
     <>
       {isEditing ? (
@@ -20,7 +26,9 @@ export function Editable({
           {children}
         </>
       ) : (
-        <Title>{text || placeholder}</Title>
+        <>
+        {type === 'input' ? <Title>{text || placeholder}</Title> : <Paragraph>{text || placeholder}</Paragraph>}
+        </>
       )}
     </>
   );

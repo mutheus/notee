@@ -11,7 +11,7 @@ import GlobalStyle from './globalStyles';
 
 export default function App() {
   const [isEditing, setIsEditing] = useState(true);
-  const [notes, setNotes] = useState([{title:'note 1'}, {title:'note 2'}, {title: 'note 3'}]);
+  const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState([]);
   
   return (

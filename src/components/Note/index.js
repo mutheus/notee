@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 import { Editable } from '../Editable';
 import { FiChevronLeft } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
@@ -28,7 +29,7 @@ const IconsWrapper = styled.div`
 `;
 
 const IconContainer = styled.div`
-  width: 50px;
+  height: 45px;
   aspect-ratio: 1/1;
   background-color: #3B3B3B;
   color: var(--text);
@@ -41,9 +42,9 @@ const IconContainer = styled.div`
 const NoteWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 2em;
+  gap: 1em;
   flex-direction: column;
-  padding: 2em 1em;
+  padding: 0 1em 2em;
 `;
 
 const Paragraph = styled.p`
@@ -78,6 +79,10 @@ const Textarea = styled.textarea`
   border: none;
 `;
 
+const DateElem = styled.small`
+    color: #939393;
+  `;
+
 export function Note({ 
   setIsEditing, 
   isEditing, 
@@ -85,34 +90,46 @@ export function Note({
   notes
 }) {
   const { id } = useParams();
-  const [desc, setDesc] = useState('');
+  const [desc, setDesc] = useState(id ? notes[id].desc : '');
   const [title, setTitle] = useState(id ? notes[id].title : '');
+  const [isCreating, setIsCreating] = useState(true);
+  const prevInputRef = useRef();
+  
+  useEffect(() => {
+    prevInputRef.current = title;
+  });
+  
+  const prevInput = prevInputRef.current;
   
   function handleChange() {
     setIsEditing(!isEditing);
+    const date = format(new Date(), 'MMM dd, yyyy / HH:mm');
     if (id) {
       const removeFromNotes = notes.splice(id, 1);
       setNotes(removeFromNotes);
       const note = {
         title,
-        desc
+        desc,
+        date
       };
       const newNotes = [note, ...notes];
       setNotes(newNotes);
-    } else if(!!title) {
-      alert(title === notes[0].title)
-      const removeFromNotes = notes.splice(0, 1);
-      setNotes(removeFromNotes);
+    } else if (isCreating) {
+      setIsCreating(false);
       const note = {
         title,
-        desc
+        desc,
+        date
       };
       const newNotes = [note, ...notes];
       setNotes(newNotes);
     } else {
+      const removeFromNotes = notes.splice(0, 1);
+      setNotes(removeFromNotes);
       const note = {
         title,
-        desc
+        desc,
+        date
       };
       const newNotes = [note, ...notes];
       setNotes(newNotes);
@@ -130,8 +147,8 @@ export function Note({
         
         { isEditing ? (
           <Link onClick={handleChange}>
-            <IconContainer>
-              <FiCheckSquare size={20} />
+            <IconContainer style={{aspectRatio: '1.7/1'}}>
+              <strong>Save</strong>
             </IconContainer>
           </Link>
         ) : (
@@ -146,23 +163,35 @@ export function Note({
       <NoteWrapper>
         <Editable 
           text={title}
+          type="input"
           placeholder={id ? notes[id].title : ''}
           isEditing={isEditing}
         >
           <Input 
             type="text" 
             name="title"
-            placeholder="Type a title..." 
+            placeholder="Title" 
             value={title} 
             onChange={e => setTitle(e.target.value)} 
           />
         </Editable>
         
-        { isEditing ? (
-          <Textarea onChange={e => setDesc(e.target.value)} rows="5" placeholder="Type a description..."></Textarea>
-        ) : (
-          <Paragraph>{desc}</Paragraph>
-        )}
+        <DateElem>{id && notes[id].date || !id && !isCreating && notes[0].date}</DateElem>
+        
+        <Editable 
+          text={desc}
+          type="textarea"
+          placeholder={id ? notes[id].desc : ''}
+          isEditing={isEditing}
+        >
+          <Textarea 
+            type="text" 
+            name="description"
+            placeholder="Type something..." 
+            value={desc} 
+            onChange={e => setDesc(e.target.value)} 
+          />
+        </Editable>
       </NoteWrapper>
     </>
   );
