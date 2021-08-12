@@ -29,13 +29,20 @@ export default function App() {
         <Router>
           <Switch>
             <Route exact path="/">
-              <Home setIsEditing={setIsEditing} notes={notes} toggleTheme={toggleTheme} />
-            </Route>
-            <Route path="/create">
-              <Note setIsEditing={setIsEditing} isEditing={isEditing} setNotes={setNotes} notes={notes} />
+              <Home 
+                setIsEditing={setIsEditing} 
+                setNotes={setNotes}
+                notes={notes} 
+                toggleTheme={toggleTheme} 
+              />
             </Route>
             <Route path="/:id">
-              <Note setIsEditing={setIsEditing} isEditing={isEditing} setNotes={setNotes} notes={notes} />
+              <Note 
+                setIsEditing={setIsEditing} 
+                isEditing={isEditing} 
+                setNotes={setNotes} 
+                notes={notes} 
+              />
             </Route>
           </Switch>
         </Router>

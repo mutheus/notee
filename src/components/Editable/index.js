@@ -27,7 +27,11 @@ export function Editable({
         </>
       ) : (
         <>
-        {type === 'input' ? <Title>{text || placeholder}</Title> : <Paragraph>{text || placeholder}</Paragraph>}
+        {type === 'input' ? (
+          <Title>{text || placeholder}</Title>
+        ) : (
+          <Paragraph>{text || placeholder}</Paragraph>
+        )}
         </>
       )}
     </>

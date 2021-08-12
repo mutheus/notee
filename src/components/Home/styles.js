@@ -50,6 +50,7 @@ export const NoteItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
   aspect-ratio: 1/1;
   border-radius: 4px;
   padding: 1em;

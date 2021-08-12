@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { Editable } from '../Editable';
 import { format } from 'date-fns';
+import { nanoid } from 'nanoid';
 import { FiChevronLeft } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { FiCheckSquare } from "react-icons/fi";
@@ -90,33 +91,32 @@ export function Note({
   notes
 }) {
   const { id } = useParams();
-  const [desc, setDesc] = useState(id ? notes[id].desc : '');
-  const [title, setTitle] = useState(id ? notes[id].title : '');
+  const note = notes.filter((item) => item.id === id);
+  const [title, setTitle] = useState(note[0] ? note[0].title : '');
+  const [desc, setDesc] = useState(note[0] ? note[0].desc : '');
   const [isCreating, setIsCreating] = useState(true);
-  const prevInputRef = useRef();
-  
-  useEffect(() => {
-    prevInputRef.current = title;
-  });
-  
-  const prevInput = prevInputRef.current;
+  let history = useHistory();
   
   function handleChange() {
     setIsEditing(!isEditing);
     const date = format(new Date(), 'MMM dd, yyyy / HH:mm');
-    if (id) {
-      const removeFromNotes = notes.splice(id, 1);
-      setNotes(removeFromNotes);
-      const note = {
+    const id = nanoid();
+    
+    if (note[0]) {
+      const removeFromNotes = notes.filter((item) => item.id !== note[0].id);
+      const newNote = {
+        id,
         title,
         desc,
-        date
+        date,
       };
-      const newNotes = [note, ...notes];
+      const newNotes = [newNote, ...removeFromNotes];
       setNotes(newNotes);
+      history.push(`/${id}`);
     } else if (isCreating) {
       setIsCreating(false);
       const note = {
+        id,
         title,
         desc,
         date
@@ -124,14 +124,14 @@ export function Note({
       const newNotes = [note, ...notes];
       setNotes(newNotes);
     } else {
-      const removeFromNotes = notes.splice(0, 1);
-      setNotes(removeFromNotes);
+      const removeFromNotes = notes.slice(1);
       const note = {
+        id,
         title,
         desc,
         date
       };
-      const newNotes = [note, ...notes];
+      const newNotes = [note, ...removeFromNotes];
       setNotes(newNotes);
     }
   }
@@ -164,7 +164,7 @@ export function Note({
         <Editable 
           text={title}
           type="input"
-          placeholder={id ? notes[id].title : ''}
+          placeholder={title}
           isEditing={isEditing}
         >
           <Input 
@@ -176,12 +176,14 @@ export function Note({
           />
         </Editable>
         
-        <DateElem>{id && notes[id].date || !id && !isCreating && notes[0].date}</DateElem>
+        <DateElem>
+          {note[0] && note[0].date || !isCreating && notes[0].date}
+        </DateElem>
         
         <Editable 
           text={desc}
           type="textarea"
-          placeholder={id ? notes[id].desc : ''}
+          placeholder={desc}
           isEditing={isEditing}
         >
           <Textarea 
