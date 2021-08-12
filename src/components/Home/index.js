@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { FiMoon } from "react-icons/fi";
+import { FiSun } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 
 import * as S from './styles';
 
-export function Home({ setIsEditing, notes }) {
+export function Home({ setIsEditing, notes, toggleTheme, isDarkOn }) {
   function handleNoteItemClick(id) {
     setIsEditing(false);
   }
@@ -16,7 +17,11 @@ export function Home({ setIsEditing, notes }) {
         <S.Title>Notes</S.Title>
         
         <S.IconsWrapper>
-          <FiMoon size={24} />
+          {isDarkOn ? (
+            <FiSun onClick={toggleTheme} size={24} />
+          ) : (
+            <FiMoon onClick={toggleTheme} size={24} />
+          )}
           
           <S.IconContainer>
             <FiSearch size={24} />

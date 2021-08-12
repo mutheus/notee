@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { format } from 'date-fns';
 import { Editable } from '../Editable';
+import { format } from 'date-fns';
 import { FiChevronLeft } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { FiCheckSquare } from "react-icons/fi";
@@ -31,8 +31,8 @@ const IconsWrapper = styled.div`
 const IconContainer = styled.div`
   height: 45px;
   aspect-ratio: 1/1;
-  background-color: #3B3B3B;
-  color: var(--text);
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.text};
   border-radius: 12px;
   display: flex;
   place-content: center;
@@ -61,7 +61,7 @@ const Input = styled.input`
   font-family: 'Source Sans Pro', sans-serif;
   padding: 0;
   margin: 0;
-  color: var(--text);
+  color: ${({ theme }) => theme.colors.text};
   border: none;
 `;
 
@@ -75,7 +75,7 @@ const Textarea = styled.textarea`
   font-family: 'Source Sans Pro', sans-serif;
   padding: 0;
   margin: 0;
-  color: var(--text);
+  color: ${({ theme }) => theme.colors.text};
   border: none;
 `;
 

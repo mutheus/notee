@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const HomeWrapper = styled.div`
   display: grid;
@@ -28,8 +29,8 @@ export const IconsWrapper = styled.div`
 export const IconContainer = styled.div`
   height: 45px;
   aspect-ratio: 1/1;
-  background-color: #3B3B3B;
-  color: var(--text);
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.text};
   border-radius: 12px;
   display: flex;
   place-content: center;
@@ -39,7 +40,7 @@ export const IconContainer = styled.div`
 export const NoteContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  place-content: ${({isEmpty}) => isEmpty ? 'start' : 'center'};
+  place-content: ${({ isEmpty }) => isEmpty ? 'start' : 'center'};
   gap: 1em;
   padding: 0 1em 2em;
 `;
@@ -53,13 +54,13 @@ export const NoteItem = styled.div`
   border-radius: 4px;
   padding: 1em;
   background-color: #FFAA91;
-  color: var(--theme);
 `;
 
 export const Subtitle = styled.h4`
+  color: #252525;
   margin: 0;
 `;
 
 export const DateElem = styled.small`
-  color: rgb(70,70,70);
+  color: ${shade(0.50, '#FFAA91')};
 `;
