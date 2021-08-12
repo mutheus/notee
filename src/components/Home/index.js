@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from 'styled-components'
 import { FiMoon } from "react-icons/fi";
 import { FiSun } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
@@ -6,7 +8,13 @@ import { FiPlus } from "react-icons/fi";
 
 import * as S from './styles';
 
-export function Home({ setIsEditing, notes, toggleTheme, isDarkOn }) {
+export function Home({ 
+  setIsEditing, 
+  notes, 
+  toggleTheme 
+}) {
+  const { title } = useContext(ThemeContext);
+  
   function handleNoteItemClick(id) {
     setIsEditing(false);
   }
@@ -17,7 +25,7 @@ export function Home({ setIsEditing, notes, toggleTheme, isDarkOn }) {
         <S.Title>Notes</S.Title>
         
         <S.IconsWrapper>
-          {isDarkOn ? (
+          {title === 'dark' ? (
             <FiSun onClick={toggleTheme} size={24} />
           ) : (
             <FiMoon onClick={toggleTheme} size={24} />

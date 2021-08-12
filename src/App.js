@@ -7,20 +7,18 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { Home } from './components/Home';
 import { Note } from './components/Note';
-
+import usePersistedState from './utils/usePersistedState';
 import GlobalStyle from './styles/global';
 import dark from './styles/themes/dark';
 import light from './styles/themes/light';
 
 export default function App() {
   const [isEditing, setIsEditing] = useState(true);
-  const [notes, setNotes] = useState([]);
-  const [theme, setTheme] = useState(dark);
-  const [isDarkOn, setIsDarkOn] = useState(true);
+  const [notes, setNotes] = usePersistedState('notes', []);
+  const [theme, setTheme] = usePersistedState('theme', dark);
   
   function toggleTheme() {
     setTheme(theme.title === 'dark' ? light : dark);
-    setIsDarkOn(!isDarkOn);
   }
   
   return (
@@ -31,7 +29,7 @@ export default function App() {
         <Router>
           <Switch>
             <Route exact path="/">
-              <Home setIsEditing={setIsEditing} notes={notes} toggleTheme={toggleTheme} isDarkOn={isDarkOn} />
+              <Home setIsEditing={setIsEditing} notes={notes} toggleTheme={toggleTheme} />
             </Route>
             <Route path="/create">
               <Note setIsEditing={setIsEditing} isEditing={isEditing} setNotes={setNotes} notes={notes} />
