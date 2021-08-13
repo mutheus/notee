@@ -80,9 +80,10 @@ const Textarea = styled.textarea`
   border: none;
 `;
 
-const DateElem = styled.small`
-    color: #939393;
-  `;
+const DateElem = styled.span`
+  font-size: .9em;
+  color: #939393;
+`;
 
 export function Note({ 
   setIsEditing, 
@@ -99,7 +100,7 @@ export function Note({
   
   function handleChange() {
     setIsEditing(!isEditing);
-    const date = format(new Date(), 'MMM dd, yyyy / HH:mm');
+    const date = format(new Date(), 'MMM dd, yyyy');
     const id = nanoid();
     
     if (note[0]) {
@@ -108,7 +109,7 @@ export function Note({
         id,
         title,
         desc,
-        date,
+        date
       };
       const newNotes = [newNote, ...removeFromNotes];
       setNotes(newNotes);

@@ -41,7 +41,7 @@ export const NoteContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-content: ${({ isEmpty }) => isEmpty ? 'start' : 'center'};
-  gap: 1em;
+  gap: ${({ isEmpty }) => isEmpty ? '1em' : '0'};;
   padding: 0 1em 2em;
 `;
 

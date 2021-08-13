@@ -37,7 +37,7 @@ const DateElem = styled.small`
           <DateElem>{item.date}</DateElem>
         </NoteItem>
       </Link>
-      <FiTrash2 onClick={() => onDelete(item.id)} size={15} style={{color: '#252525', position: 'absolute', right: '10px', bottom: '1.1em'}} />
+      <FiTrash2 onClick={() => onDelete(item.id)} size={15} style={{color: `${shade(0.50, '#FFAA91')}`, position: 'absolute', right: '1em', bottom: '1.1em'}} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { FiMoon } from "react-icons/fi";
 import { FiSun } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
+import { RiBookletLine } from "react-icons/ri";
 
 import * as S from './styles';
 
@@ -15,7 +16,7 @@ export function Home({
   setNotes,
   toggleTheme 
 }) {
-  const { title } = useContext(ThemeContext);
+  const { title, colors } = useContext(ThemeContext);
   
   function handleDelete(itemId) {
     const newNotes = notes.filter((item) => item.id !== itemId);
@@ -51,7 +52,11 @@ export function Home({
             />
           ))
         ) : (
-          <S.Title style={{fontSize: '1rem', gridColumn: '1/4', color: '#939393', textAlign: 'center'}}>Nothing to see here yet.</S.Title>
+          <>
+            <RiBookletLine color={'#939393'} size={50} style={{gridColumn: '1/4', margin: '0 auto', strokeWidth: 1, stroke: `${colors.primary}`}} />
+            <span style={{gridColumn: '1/4', margin: '0 auto', color: '#939393', marginBottom: '3em'}}>No notes</span>
+            <S.Title style={{fontSize: '1rem', gridColumn: '1/4', color: '#939393', textAlign: 'center'}}>The notes you add will appear here.</S.Title>
+          </>
         )}
       </S.NoteContainer>
       
