@@ -14,7 +14,7 @@ const NoteItem = styled.div`
   aspect-ratio: 1/1;
   border-radius: 4px;
   padding: 1em;
-  background-color: #FFAA91;
+  background-color: ${item.color};
 `;
 
 const Subtitle = styled.h4`

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Editable } from '../Editable';
+import { RadioButton } from '../RadioButton';
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { FiChevronLeft } from "react-icons/fi";
@@ -55,6 +56,7 @@ const Paragraph = styled.p`
 const Input = styled.input`
   display: flex;
   font-size: 2rem;
+  resize: none;
   width: 100%;
   outline: none;
   background-color: transparent;
@@ -85,6 +87,24 @@ const DateElem = styled.span`
   color: #939393;
 `;
 
+const RadioWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1em;
+  justify-content: space-between;
+  margin-top: auto;
+
+  div {
+    display: flex;
+    color: #252525;
+    place-content: center;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+  }
+`;
+
 export function Note({ 
   setIsEditing, 
   isEditing, 
@@ -96,7 +116,9 @@ export function Note({
   const [title, setTitle] = useState(note[0] ? note[0].title : '');
   const [desc, setDesc] = useState(note[0] ? note[0].desc : '');
   const [isCreating, setIsCreating] = useState(true);
+  const [selectedColor, setSelectedColor] = useState(note[0] ? note[0].color : '#ffab91');
   let history = useHistory();
+  const colors = ['#ffab91', '#ffcc80', '#e8ed9b', '#82deeb', '#d094da', '#f48fb1'];
   
   function handleChange() {
     setIsEditing(!isEditing);
@@ -109,7 +131,8 @@ export function Note({
         id,
         title,
         desc,
-        date
+        date,
+        color: selectedColor
       };
       const newNotes = [newNote, ...removeFromNotes];
       setNotes(newNotes);
@@ -120,7 +143,8 @@ export function Note({
         id,
         title,
         desc,
-        date
+        date,
+        color: selectedColor
       };
       const newNotes = [note, ...notes];
       setNotes(newNotes);
@@ -130,7 +154,8 @@ export function Note({
         id,
         title,
         desc,
-        date
+        date,
+        color: selectedColor
       };
       const newNotes = [note, ...removeFromNotes];
       setNotes(newNotes);
@@ -169,6 +194,7 @@ export function Note({
           isEditing={isEditing}
         >
           <Input 
+            as="textarea"
             type="text" 
             name="title"
             placeholder="Title" 
@@ -195,6 +221,21 @@ export function Note({
             onChange={e => setDesc(e.target.value)} 
           />
         </Editable>
+        
+        {isEditing && (
+          <RadioWrapper>
+            {
+              colors.map((color, index) => (
+                <RadioButton 
+                  key={index}
+                  color={color}
+                  selectedColor={selectedColor}
+                  onChange={setSelectedColor}
+                />
+              ))
+            }
+          </RadioWrapper>
+        )}
       </NoteWrapper>
     </>
   );
