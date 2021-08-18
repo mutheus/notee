@@ -6,7 +6,7 @@ export function RadioButton({ color, selectedColor, onChange }) {
       onClick={() => onChange(color)} 
       style={{backgroundColor: `${color}`}}
     >
-      {selectedColor === color && <FiCheck size={32} />}
+      {selectedColor === color && <FiCheck size={'60%'} />}
     </div>  
   );
 }

@@ -16,6 +16,7 @@ export function Editable({
   
   const Paragraph = styled.p`
     font-size: 1em;
+    max-width: 30em;
     word-break: break-word;
     margin: 0;
   `;

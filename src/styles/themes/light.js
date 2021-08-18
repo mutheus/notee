@@ -1,6 +1,6 @@
 import { shade } from 'polished';
 
-export default {
+const light = {
   title: "light",
   colors: {
     primary: "#FFF",
@@ -8,3 +8,5 @@ export default {
     text: "#252525"
   },
 }
+
+export default light;

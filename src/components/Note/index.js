@@ -1,109 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { Editable } from '../Editable';
-import { RadioButton } from '../RadioButton';
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
+import { Editable } from '../Editable';
+import { RadioButton } from '../RadioButton';
+import { IconContainer } from '../../styles';
 import { FiChevronLeft } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
-import { FiCheckSquare } from "react-icons/fi";
+import TextareaAutosize from 'react-textarea-autosize';
 
-import styled from 'styled-components';
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  place-items: center;
-  padding: 2em 1em;
-`;
-
-const Title = styled.h1`
-  word-break: break-word;
-  font-size: 2rem;
-  margin: 0;
-  font-weight: 600;
-`;
-
-const IconsWrapper = styled.div`
-  display: flex;
-  place-items: center;
-  gap: 20px;
-`;
-
-const IconContainer = styled.div`
-  height: 45px;
-  aspect-ratio: 1/1;
-  background-color: ${({ theme }) => theme.colors.secondary};
-  color: ${({ theme }) => theme.colors.text};
-  border-radius: 12px;
-  display: flex;
-  place-content: center;
-  place-items: center;
-`;
-
-const NoteWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-  flex-direction: column;
-  padding: 0 1em 2em;
-`;
-
-const Paragraph = styled.p`
-  margin: 0;
-`;
-
-const Input = styled.input`
-  display: flex;
-  font-size: 2rem;
-  resize: none;
-  width: 100%;
-  outline: none;
-  background-color: transparent;
-  font-weight: 600;
-  font-family: 'Source Sans Pro', sans-serif;
-  padding: 0;
-  margin: 0;
-  color: ${({ theme }) => theme.colors.text};
-  border: none;
-`;
-
-const Textarea = styled.textarea`
-  display: flex;
-  resize: none;
-  font-size: 1rem;
-  width: 100%;
-  outline: none;
-  background-color: transparent;
-  font-family: 'Source Sans Pro', sans-serif;
-  padding: 0;
-  margin: 0;
-  color: ${({ theme }) => theme.colors.text};
-  border: none;
-`;
-
-const DateElem = styled.span`
-  font-size: .9em;
-  color: #939393;
-`;
-
-const RadioWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1em;
-  justify-content: space-between;
-  margin-top: auto;
-
-  div {
-    display: flex;
-    color: #252525;
-    place-content: center;
-    place-items: center;
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 8px;
-  }
-`;
+import * as S from './styles';
 
 export function Note({ 
   setIsEditing, 
@@ -112,59 +18,54 @@ export function Note({
   notes
 }) {
   const { id } = useParams();
-  const note = notes.filter((item) => item.id === id);
-  const [title, setTitle] = useState(note[0] ? note[0].title : '');
-  const [desc, setDesc] = useState(note[0] ? note[0].desc : '');
+  const note = notes.find((item) => item.id === id);
+  const [title, setTitle] = useState(note ? note.title : '');
+  const [desc, setDesc] = useState(note ? note.desc : '');
   const [isCreating, setIsCreating] = useState(true);
-  const [selectedColor, setSelectedColor] = useState(note[0] ? note[0].color : '#ffab91');
-  let history = useHistory();
+  const [selectedColor, setSelectedColor] = useState(note ? note.color : '#ffab91');
   const colors = ['#ffab91', '#ffcc80', '#e8ed9b', '#82deeb', '#d094da', '#f48fb1'];
+  let history = useHistory();
+
+  function createNote(id, title, desc, date, color, notes) {
+    const newNote = {
+     id,
+     title,
+     desc,
+     date,
+     color
+    };
+    
+    const newNotes = [newNote, ...notes];
+    setNotes(newNotes);
+  }
   
   function handleChange() {
+    if (!title.length) {
+      return;
+    }
+    
     setIsEditing(!isEditing);
-    const date = format(new Date(), 'MMM dd, yyyy');
+    const date = format(new Date(), 'MMM dd, yyyy / HH:mm');
     const id = nanoid();
     
-    if (note[0]) {
-      const removeFromNotes = notes.filter((item) => item.id !== note[0].id);
-      const newNote = {
-        id,
-        title,
-        desc,
-        date,
-        color: selectedColor
-      };
-      const newNotes = [newNote, ...removeFromNotes];
-      setNotes(newNotes);
+    if (note) {
+      const removeFromNotes = notes.filter((item) => item.id !== note.id);
+      
+      createNote(id, title, desc, date, selectedColor, removeFromNotes);
+      
       history.push(`/${id}`);
     } else if (isCreating) {
       setIsCreating(false);
-      const note = {
-        id,
-        title,
-        desc,
-        date,
-        color: selectedColor
-      };
-      const newNotes = [note, ...notes];
-      setNotes(newNotes);
+      createNote(id, title, desc, date, selectedColor, notes);
     } else {
       const removeFromNotes = notes.slice(1);
-      const note = {
-        id,
-        title,
-        desc,
-        date,
-        color: selectedColor
-      };
-      const newNotes = [note, ...removeFromNotes];
-      setNotes(newNotes);
+      createNote(id, title, desc, date, selectedColor, removeFromNotes);
     }
   }
   
   return (
     <>
-      <Header>
+      <S.Header>
         <Link to="/">
           <IconContainer>
             <FiChevronLeft size={24} />
@@ -184,17 +85,18 @@ export function Note({
             </IconContainer>
           </Link>
         )}
-      </Header>
+      </S.Header>
       
-      <NoteWrapper>
+      <S.NoteWrapper>
         <Editable 
           text={title}
           type="input"
           placeholder={title}
           isEditing={isEditing}
         >
-          <Input 
-            as="textarea"
+          <S.Input 
+            as={TextareaAutosize}
+            minRows={1} 
             type="text" 
             name="title"
             placeholder="Title" 
@@ -203,9 +105,9 @@ export function Note({
           />
         </Editable>
         
-        <DateElem>
-          {note[0] && note[0].date || !isCreating && notes[0].date}
-        </DateElem>
+        <S.DateElem>
+          {(note && note.date) || (!isCreating && notes[0].date)}
+        </S.DateElem>
         
         <Editable 
           text={desc}
@@ -213,8 +115,10 @@ export function Note({
           placeholder={desc}
           isEditing={isEditing}
         >
-          <Textarea 
+          <S.Textarea 
+            as={TextareaAutosize}
             type="text" 
+            minRows={5}
             name="description"
             placeholder="Type something..." 
             value={desc} 
@@ -223,7 +127,7 @@ export function Note({
         </Editable>
         
         {isEditing && (
-          <RadioWrapper>
+          <S.RadioWrapper>
             {
               colors.map((color, index) => (
                 <RadioButton 
@@ -234,9 +138,9 @@ export function Note({
                 />
               ))
             }
-          </RadioWrapper>
+          </S.RadioWrapper>
         )}
-      </NoteWrapper>
+      </S.NoteWrapper>
     </>
   );
 }
