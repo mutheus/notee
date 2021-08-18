@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiTrash2 } from "react-icons/fi";
 import { shade } from 'polished';
 
@@ -49,29 +49,31 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     }
   `;
   
+  let history = useHistory();
+  
   function handleDelClick(e) {
-    e.preventDefault();
+    e.stopPropagation();
     onDelete(item.id);
+  }
+  
+  function handleNoteClick() {
+    history.push(`/${item.id}`);
+    setIsEditing(false)
   }
 
   return (
-    <Link 
-      to={`/${item.id}`} 
-      onClick={() => setIsEditing(false)} 
-    >
-      <NoteItem>
-        <Subtitle>{item.title.length > 70 ? `${item.title.substring(0, 70)}...` : item.title}</Subtitle>
-        <DateElem>
-          {item.date} 
-          
-          <DeleteBtn 
-            as="button" 
-            onClick={(e) => handleDelClick(e)}
-          >
-            <FiTrash2 />
-          </DeleteBtn>
-        </DateElem>
-      </NoteItem>
-    </Link>
+    <NoteItem onClick={handleNoteClick}>
+      <Subtitle>{item.title.length > 70 ? `${item.title.substring(0, 70)}...` : item.title}</Subtitle>
+      <DateElem>
+        {item.date} 
+        
+        <DeleteBtn 
+          as="button" 
+          onClick={(e) => handleDelClick(e)}
+        >
+          <FiTrash2 />
+        </DeleteBtn>
+      </DateElem>
+    </NoteItem>
   );
 }
