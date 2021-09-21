@@ -1,6 +1,6 @@
 <h2 align="center">Notee</h2>
 
-![notee](https://i.ibb.co/fMckxmF/20210818-095545.jpg)
+<img src="https://i.ibb.co/fMckxmF/20210818-095545.jpg" width="266px">
 
 ## 🔥️ Tecnologias
 
