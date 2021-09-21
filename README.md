@@ -1,4 +1,4 @@
-<h2 align="center">Notee</h2>
+## Notee
 
 <img src="https://i.ibb.co/fMckxmF/20210818-095545.jpg" width="266px">
 
