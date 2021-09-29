@@ -73,17 +73,13 @@ export function Note({
         </Link>
         
         { isEditing ? (
-          <Link onClick={handleChange}>
-            <IconContainer style={{aspectRatio: '1.7/1'}}>
+            <IconContainer onClick={handleChange} style={{aspectRatio: '1.7/1'}}>
               <strong>Save</strong>
             </IconContainer>
-          </Link>
         ) : (
-          <Link onClick={() => setIsEditing(!isEditing)}>
-            <IconContainer>
+            <IconContainer onClick={() => setIsEditing(!isEditing)}>
               <FiEdit size={20} />
             </IconContainer>
-          </Link>
         )}
       </S.Header>
       

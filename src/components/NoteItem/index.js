@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { FiTrash2 } from "react-icons/fi";
 import { shade } from 'polished';
 

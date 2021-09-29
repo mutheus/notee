@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IconContainer } from '../../styles';
 
 export const HomeWrapper = styled.div`
   display: grid;
@@ -30,6 +31,10 @@ export const IconsWrapper = styled.div`
   gap: 20px;
   position: relative;
 `;
+
+export const ThemeButton = styled(IconContainer)`
+  background-color: transparent;
+`
 
 export const NoteContainer = styled.div`
   display: grid;

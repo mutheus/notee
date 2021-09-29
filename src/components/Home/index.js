@@ -62,9 +62,13 @@ export function Home({
         
         <S.IconsWrapper>
           {title === 'dark' ? (
-            <I.FiSun onClick={toggleTheme} size={24} />
+            <S.ThemeButton>
+              <I.FiSun onClick={toggleTheme} size={24} />
+            </S.ThemeButton>
           ) : (
-            <I.FiMoon onClick={toggleTheme} size={24} />
+            <S.ThemeButton>
+              <I.FiMoon onClick={toggleTheme} size={24} />
+            </S.ThemeButton>
           )}
           
           {isSearching && (
