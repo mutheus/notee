@@ -7,6 +7,8 @@ import styled from 'styled-components';
 export function NoteItem({ setIsEditing, onDelete, item }) {
   const NoteItem = styled.div`
     width: 100%;
+    max-height: 300px;
+    max-width: 300px;
     aspect-ratio: 1/1;
     height: 100%;
     display: flex;
@@ -14,7 +16,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     cursor: pointer;
     
     @media(min-width: 1023px) {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
     }
     
     justify-content: space-between;
@@ -47,7 +49,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     cursor: pointer;
     
     @media(min-width: 1023px) {
-      font-size: 20px;
+      font-size: 18px;
     }
   `;
   

@@ -44,7 +44,7 @@ export const NoteContainer = styled.div`
     grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(2, 1fr)' : 'auto'};
   }
   
-  @media(min-width: 500px) {
+  @media(min-width: 530px) {
     grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(3, 1fr)' : 'auto'};
   }
   
@@ -54,7 +54,7 @@ export const NoteContainer = styled.div`
   }
   
   @media(min-width: 1023px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, 1fr)' : 'auto'};
+    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, minmax(auto, 233px));' : 'auto'};
     padding: 0 5vw 2em;
   }
   
