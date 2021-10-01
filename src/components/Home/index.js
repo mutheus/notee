@@ -1,9 +1,8 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import { NoteItem } from '../NoteItem';
 import { IconContainer } from '../../styles';
-import { AddContainer } from '../../styles';
 import * as I from "react-icons/fi";
 import { 
   RiBookletLine as Illustration 
@@ -22,15 +21,7 @@ export function Home({
   const [search, setSearch] = useState('');
   const [filteredNotes, setFilteredNotes] = useState();
   const searchRef = useRef();
-  
-  function handleDelete(itemId) {
-    const newNotes = notes.filter((item) => item.id !== itemId);
-    setNotes(newNotes);
-  }
-  
-  function handleSearch(e) {
-    setSearch(e.target.value);
-  }
+  let history = useHistory();
   
   useEffect(() => {
     function filterNotes() {
@@ -54,6 +45,20 @@ export function Home({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [search, notes, searchRef])
+
+  function handleDelete(itemId) {
+    const newNotes = notes.filter((item) => item.id !== itemId);
+    setNotes(newNotes);
+  }
+  
+  function handleSearch(e) {
+    setSearch(e.target.value);
+  }
+
+  function handleAddClick() {
+    history.push('/new');
+    setIsEditing(true);
+  }
   
   return (
     <S.HomeWrapper>
@@ -136,11 +141,9 @@ export function Home({
         }
       </S.NoteContainer>
       
-      <Link to="/new" onClick={() => setIsEditing(true)}>
-        <AddContainer>
-          <I.FiPlus size={26} />
-        </AddContainer>
-      </Link>
+      <S.AddContainer onClick={handleAddClick}>
+        <I.FiPlus size={26} />
+      </S.AddContainer>
     </S.HomeWrapper>
   );
 }

@@ -11,6 +11,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     height: 100%;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     
     @media(min-width: 1023px) {
       font-size: 1.3rem;
@@ -43,6 +44,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     background-color: transparent;
     border: none;
     font-size: 15px;
+    cursor: pointer;
     
     @media(min-width: 1023px) {
       font-size: 20px;

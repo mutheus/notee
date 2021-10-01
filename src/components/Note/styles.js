@@ -65,6 +65,7 @@ export const RadioWrapper = styled.div`
 
   div {
     display: flex;
+    cursor: pointer;
     color: #252525;
     place-content: center;
     place-items: center;

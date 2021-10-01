@@ -54,11 +54,8 @@ export const NoteContainer = styled.div`
   }
   
   @media(min-width: 1023px) {
+    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, 1fr)' : 'auto'};
     padding: 0 5vw 2em;
-  }
-  
-  @media(min-width: 1200px) {
-    padding: 0 10vw 2em;
   }
   
   place-content: ${({ isEmpty }) => isEmpty ? 'start' : 'center'};
@@ -96,4 +93,16 @@ export const SearchInput = styled.input`
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   outline: none;
+`;
+
+export const AddContainer = styled(IconContainer)`
+  border-radius: 50%;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  height: 55px;
+
+  @media(min-width: 1023px) {
+    right: 5vw;
+  }
 `;
