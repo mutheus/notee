@@ -17,7 +17,6 @@ $ git clone https://github.com/mutheus/notee.git && cd notee
 # Install the dependencies
 $ npm install
 
-
 # Start the project
 $ npm start
 ```
