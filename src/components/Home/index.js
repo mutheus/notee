@@ -72,12 +72,12 @@ export function Home({
         
         <S.IconsWrapper>
           {title === 'dark' ? (
-            <S.ThemeButton>
-              <I.FiSun onClick={toggleTheme} size={24} />
+            <S.ThemeButton onClick={toggleTheme}>
+              <I.FiSun size={24} />
             </S.ThemeButton>
           ) : (
-            <S.ThemeButton>
-              <I.FiMoon onClick={toggleTheme} size={24} />
+            <S.ThemeButton onClick={toggleTheme}>
+              <I.FiMoon size={24} />
             </S.ThemeButton>
           )}
           
