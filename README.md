@@ -24,7 +24,7 @@ $ npm start
 
 ## 💻️ Project
 
-Project inspired by the [Amal's](https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app) note app concept. The notes stay saved in the localStorage, you can add, edit, delete, and search for a note.
+The project was inspired by [Amal's](https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app) note app concept. The notes stay saved in the localStorage, you can add, edit, delete, and search for a note.
 
 <hr>
 
