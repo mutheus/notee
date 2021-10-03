@@ -26,7 +26,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     background-color: ${item.color};
   `;
   
-  const Subtitle = styled.h2`
+  const Title = styled.h2`
     font-size: 1em;
     color: #252525;
     margin: 0;
@@ -70,7 +70,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
 
   return (
     <NoteItem onClick={handleNoteClick}>
-      <Subtitle>{item.title}</Subtitle>
+      <Title>{item.title}</Title>
 
       <DateElem>
         {item.date} 

@@ -54,7 +54,7 @@ export const NoteContainer = styled.div`
   }
   
   @media(min-width: 1023px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, minmax(auto, 233px));' : 'auto'};
+    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, minmax(0px, 233px));' : 'auto'};
     padding: 0 5vw 2em;
   }
   
