@@ -1,6 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
+import { nanoid } from 'nanoid';
 import { NoteItem } from '../NoteItem';
 import { IconContainer } from '../../styles';
 import * as I from "react-icons/fi";
@@ -124,7 +125,7 @@ export function Home({
           ))
         ) : [
             !notes.length ? (
-              <S.EmptyContainer>
+              <S.EmptyContainer key={nanoid()}>
                 <Illustration
                   color={'#939393'} 
                   size={50} 
@@ -149,7 +150,7 @@ export function Home({
                   />
                 ))
               ) : (
-                <S.EmptyContainer>
+                <S.EmptyContainer key={nanoid()}>
                   <S.EmptyMsg as="h2">No notes found.</S.EmptyMsg>
                 </S.EmptyContainer>
               )
