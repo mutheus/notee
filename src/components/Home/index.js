@@ -1,7 +1,6 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
-import { nanoid } from 'nanoid';
 import { NoteItem } from '../NoteItem';
 import { IconContainer } from '../../styles';
 import * as I from "react-icons/fi";
@@ -123,9 +122,8 @@ export function Home({
               item={item}
             />
           ))
-        ) : [
-            !notes.length ? (
-              <S.EmptyContainer key={nanoid()}>
+        ) : !notes.length ? (
+              <S.EmptyContainer>
                 <Illustration
                   color={'#939393'} 
                   size={50} 
@@ -139,24 +137,20 @@ export function Home({
             
                 <S.EmptyMsg as="h2">The notes you add will appear here.</S.EmptyMsg>
               </S.EmptyContainer>
-            ) : [
-              search && !!filteredNotes.length ? (
-                filteredNotes.map((item) => (
-                  <NoteItem 
-                    key={item.id}
-                    setIsEditing={setIsEditing}
-                    onDelete={handleDelete}
-                    item={item}
-                  />
-                ))
-              ) : (
-                <S.EmptyContainer key={nanoid()}>
-                  <S.EmptyMsg as="h2">No notes found.</S.EmptyMsg>
-                </S.EmptyContainer>
-              )
-            ]
-          ]
-        }
+            ) : search && !!filteredNotes.length ? (
+                  filteredNotes.map((item) => (
+                    <NoteItem 
+                      key={item.id}
+                      setIsEditing={setIsEditing}
+                      onDelete={handleDelete}
+                      item={item}
+                    />
+                  ))
+                ) : (
+                  <S.EmptyContainer>
+                    <S.EmptyMsg as="h2">No notes found.</S.EmptyMsg>
+                  </S.EmptyContainer>
+                )}
       </S.NoteContainer>
       
       <S.AddContainer onClick={handleAddClick}>
