@@ -20,7 +20,8 @@ export function Home({
   const [isSearching, setIsSearching] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredNotes, setFilteredNotes] = useState();
-  const searchRef = useRef();
+  const searchInputRef = useRef();
+  const searchBtnRef = useRef();
   let history = useHistory();
   
   useEffect(() => {
@@ -33,18 +34,21 @@ export function Home({
       });
       setFilteredNotes(filter);
     }
+
     filterNotes();
     
     function handleClickOutside(e) {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
+      if (searchInputRef.current && !searchInputRef.current.contains(e.target) && !searchBtnRef.current.contains(e.target)) {
         setIsSearching(false);
       }
     }
+
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [search, notes, searchRef])
+  }, [search, notes, searchInputRef, searchBtnRef])
 
   function handleDelete(itemId) {
     const newNotes = notes.filter((item) => item.id !== itemId);
@@ -82,20 +86,33 @@ export function Home({
                 onChange={handleSearch}
                 value={search}
                 autoFocus
-                ref={searchRef} 
+                ref={searchInputRef} 
                 type="search" 
                 placeholder="Search a note" 
               />
             </IconContainer>
           )}
           
-          <IconContainer onClick={() => setIsSearching(!isSearching)} style={{borderTopLeftRadius: isSearching ? 0 : '12px', borderBottomLeftRadius: isSearching ? 0 : '12px'}}>
+          <IconContainer 
+            onClick={() => setIsSearching(!isSearching)} 
+            ref={searchBtnRef}
+            style={{
+              borderTopLeftRadius: isSearching ? 0 : '12px', 
+              borderBottomLeftRadius: isSearching ? 0 : '12px'
+            }}
+          >
             <I.FiSearch size={24} />
           </IconContainer>
         </S.IconsWrapper>
       </S.Header>
       
-      <S.NoteContainer isEmpty={!!notes.length} style={{placeContent: search && !!notes.length && !filteredNotes.length && 'center'}}>
+      <S.NoteContainer 
+        filteredNotes={isSearching ? filteredNotes.length : ''} 
+        isEmpty={!!notes.length} 
+        style={{
+          placeContent: search && !!notes.length && !filteredNotes.length && 'center'
+        }}
+        >
         {!!notes.length && !search ? (
           notes.map((item) => (
             <NoteItem 

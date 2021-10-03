@@ -2,10 +2,9 @@ import { useHistory } from 'react-router-dom';
 import { FiTrash2 } from "react-icons/fi";
 import { shade } from 'polished';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
-export function NoteItem({ setIsEditing, onDelete, item }) {
-  const NoteItem = styled.div`
+const NoteItemWrapper = styled.div`
     width: 100%;
     max-height: 300px;
     max-width: 300px;
@@ -23,7 +22,7 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     position: relative;
     border-radius: 4px;
     padding: 1em;
-    background-color: ${item.color};
+    background-color: ${({ color }) => color};
   `;
   
   const Title = styled.h2`
@@ -36,13 +35,13 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     overflow: hidden;
   `;
   
-  const DateElem = styled.span`
+  const DateElem = styled.span`${({ color }) => css`
     font-size: .8em;
-    color: ${shade(0.50, `${item.color}`)};
+    color: ${color};
     display: flex;
     justify-content: space-between;
     align-items: center;
-  `;
+  `}`;
   
   const DeleteBtn = styled(DateElem)`
     padding: 0;
@@ -50,12 +49,14 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
     border: none;
     font-size: 15px;
     cursor: pointer;
+    color: inherit;
     
     @media(min-width: 1023px) {
       font-size: 18px;
     }
   `;
-  
+
+export function NoteItem({ setIsEditing, onDelete, item }) {
   let history = useHistory();
   
   function handleDelClick(e) {
@@ -69,10 +70,10 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
   }
 
   return (
-    <NoteItem onClick={handleNoteClick}>
+    <NoteItemWrapper color={item.color} onClick={handleNoteClick}>
       <Title>{item.title}</Title>
 
-      <DateElem>
+      <DateElem color={shade(0.50, item.color)}>
         {item.date} 
         
         <DeleteBtn 
@@ -82,6 +83,6 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
           <FiTrash2 />
         </DeleteBtn>
       </DateElem>
-    </NoteItem>
+    </NoteItemWrapper>
   );
 }

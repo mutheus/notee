@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { IconContainer } from '../../styles';
 
 export const HomeWrapper = styled.div`
@@ -41,20 +41,20 @@ export const NoteContainer = styled.div`
   grid-template-columns: 1fr;
   
   @media(min-width: 359px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(2, 1fr)' : 'auto'};
+    grid-template-columns: ${({ isEmpty, filteredNotes }) => isEmpty && filteredNotes !== 0 ? 'repeat(2, 1fr)' : '1fr'};
   }
   
   @media(min-width: 530px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(3, 1fr)' : 'auto'};
+    grid-template-columns: ${({ isEmpty, filteredNotes }) => isEmpty && filteredNotes !== 0 ? 'repeat(3, 1fr)' : '1fr'};
   }
   
   @media(min-width: 735px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(4, 1fr)' : 'auto'};
+    grid-template-columns: ${({ isEmpty, filteredNotes }) => isEmpty && filteredNotes !== 0 ? 'repeat(4, 1fr)' : '1fr'};
     padding: 0 1em 2em;
   }
   
   @media(min-width: 1023px) {
-    grid-template-columns: ${({ isEmpty }) => isEmpty ? 'repeat(5, minmax(0px, 233px));' : 'auto'};
+    grid-template-columns: ${({ isEmpty, filteredNotes }) => isEmpty && filteredNotes !== 0 ? 'repeat(5, minmax(0px, 233px));' : '1fr'};
     padding: 0 5vw 2em;
   }
   
@@ -64,7 +64,6 @@ export const NoteContainer = styled.div`
 `;
 
 export const EmptyContainer = styled.div`
-  grid-column: 1/4;
   display: flex;
   flex-direction: column;
   place-items: center;
