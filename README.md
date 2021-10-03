@@ -1,34 +1,30 @@
 ## Notee
 
-<img src="https://i.ibb.co/fMckxmF/20210818-095545.jpg" width="266px">
+<img src="https://i.ibb.co/BZ0z3Cp/Captura-de-tela-2021-10-03-04-13-22.png" width="266px">
 
-## 🔥️ Tecnologias
+## 🔥️ Technologies 
 
 - [ReactJS](https://reactjs.org/)
 - [Styled components](https://styled-components.com)
 
-## 🚀 Como executar
+## 🚀 How to run
 
-Clone o projeto e acesse a pasta
+Clone the repo and access the folder
 
 ```bash
 $ git clone https://github.com/mutheus/notee.git && cd notee
 
-# Instale as dependências do projeto
+# Install the dependencies
 $ npm install
-# ou
-$ yarn
 
 
-# Inicie o projeto
-$ npm run dev
-# ou
-$ yarn dev
+# Start the project
+$ npm start
 ```
 
-## 💻️ Projeto
+## 💻️ Project
 
-Projeto inspirado no conceito do [Amal](https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app). As anotações ficam salvas no localStorage, você pode adicionar, editar, deletar e pesquisar por uma anotação.
+Project inspired by the [Amal's](https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app) note app concept. The notes stay saved in the localStorage, you can add, edit, delete, and search for a note.
 
 <hr>
 
