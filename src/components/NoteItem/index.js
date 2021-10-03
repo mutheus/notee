@@ -27,10 +27,13 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
   `;
   
   const Subtitle = styled.h2`
-    word-break: break-word;
     font-size: 1em;
     color: #252525;
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   `;
   
   const DateElem = styled.span`
@@ -67,7 +70,8 @@ export function NoteItem({ setIsEditing, onDelete, item }) {
 
   return (
     <NoteItem onClick={handleNoteClick}>
-      <Subtitle>{item.title.length > 70 ? `${item.title.substring(0, 70)}...` : item.title}</Subtitle>
+      <Subtitle>{item.title}</Subtitle>
+
       <DateElem>
         {item.date} 
         
